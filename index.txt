@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, cursive;
+}
+
+body {
+  background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.card {
+  background: rgba(255,255,255,0.25);
+  padding: 40px;
+  border-radius: 25px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 0 35px rgba(255,105,180,0.7);
+  animation: float 4s ease-in-out infinite;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2.1em;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.1em;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #ff1493;
+  border: none;
+  padding: 15px 28px;
+  font-size: 1.05em;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255,20,147,0.6);
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.no {
+  background: #ff69b4;
+  position: relative;
+}
+
+.message {
+  display: none;
+  margin-top: 25px;
+  font-size: 1.2em;
+  animation: pop 0.8s ease;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: sparkle 3s linear;
+}
+
+@keyframes sparkle {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-200px); opacity: 0; }
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  font-size: 22px;
+  color: hotpink;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song">
+  <source src="https://files.catbox.moe/6zqz9k.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>Thandolwethu Sihlali 💕</h1>
+
+  <p>
+    From the moment you came into my life,  
+    everything felt softer… warmer… real.  
+    You’re my peace, my excitement, my forever.
+    <br><br>
+    So today I just want to ask you something special 💗
+  </p>
+
+  <div class="buttons">
+    <button onclick="sayYes(event)">YES 💘</button>
+    <button class="no" onmouseover="runAway(this)">NO 🙈</button>
+  </div>
+
+  <div class="message" id="message">
+    I choose you. Every day.  
+    In every lifetime.  
+    Happy Valentine’s Day, my love 🥹💖  
+    You are my heart.
+  </div>
+</div>
+
+<script>
+const song = document.getElementById("song");
+
+function playSong() {
+  if (song.paused) song.play();
+}
+
+function sayYes(e) {
+  playSong();
+  document.getElementById("message").style.display = "block";
+  explodeHearts(e.clientX, e.clientY);
+}
+
+function runAway(btn) {
+  playSong();
+  const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+  btn.style.position = "fixed";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
+
+function explodeHearts(x, y) {
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+    heart.style.setProperty("--x", (Math.random()*200 - 100) + "px");
+    heart.style.setProperty("--y", (Math.random()*200 - 100) + "px");
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  }
+}
+
+// sparkles
+setInterval(() => {
+  const s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = Math.random() * window.innerWidth + "px";
+  s.style.bottom = "0px";
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 3000);
+}, 120);
+</script>
+
+</body>
+</html>
